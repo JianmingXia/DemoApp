@@ -51,7 +51,6 @@ export default {
             return state.filter(item => item.id !== task.id);
         },
         add(state, { payload }) {
-            console.log(payload);
             return [
                 payload,
                 ...state

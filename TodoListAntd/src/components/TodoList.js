@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, List, Icon, Checkbox, Popconfirm } from 'antd';
 import styles from './TodoList.less';
 
-const TodoList = ({ onToggle, onDelete, todolists }) => {
+const TodoList = ({ onToggle, onDelete, todolists, filter }) => {
     return (
         <div>
             <Col span={9}>

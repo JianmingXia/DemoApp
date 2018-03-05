@@ -24,6 +24,10 @@ var tasks = [{
     id: 0,
     name: "预置任务",
     completed: false
+}, {
+    id: 1,
+    name: "预置任务2",
+    completed: true
 }];
 
 var id = tasks.length;
@@ -49,7 +53,7 @@ app.get('/api/listTasks', function (req, res) {
 app.post('/api/toggleTask', function (req, res) {
     console.log(req.body);
 
-    var task_id  = req.body.task_id;
+    var task_id = req.body.task_id;
 
     var result = {};
     tasks = tasks.map((item) => {
@@ -82,7 +86,7 @@ app.post('/api/deleteTask', function (req, res) {
 
     res.send(JSON.stringify(delete_task));
 });
-return 
+return
 
 app.get('/api/test', function (req, res) {
     res.send(JSON.stringify({
