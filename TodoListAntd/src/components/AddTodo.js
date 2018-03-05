@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
+
 const FormItem = Form.Item;
 
 const AddTodo = ({ onAdd, form }) => {
@@ -35,6 +37,10 @@ const AddTodo = ({ onAdd, form }) => {
         </div>
     )
 }
+
+AddTodo.propTypes = {
+    onAdd: PropTypes.func.isRequired
+};
 
 const NormalAddTodo = Form.create()(AddTodo);
 export default NormalAddTodo;

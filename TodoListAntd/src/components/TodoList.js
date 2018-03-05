@@ -1,8 +1,10 @@
 import React from 'react';
 import { Col, List, Icon, Checkbox, Popconfirm } from 'antd';
+import PropTypes from 'prop-types';
+
 import styles from './TodoList.less';
 
-const TodoList = ({ onToggle, onDelete, todolists, filter }) => {
+const TodoList = ({ onToggle, onDelete, todolists }) => {
     return (
         <div>
             <Col span={9}>
@@ -22,6 +24,12 @@ const TodoList = ({ onToggle, onDelete, todolists, filter }) => {
             </Col>
         </div>
     );
+};
+
+TodoList.propTypes = {
+    onToggle: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    todolists: PropTypes.array.isRequired
 };
 
 export default TodoList;

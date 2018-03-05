@@ -1,5 +1,6 @@
 import React from 'react';
 import { FilterTypes } from '../constants.js';
+import PropTypes from 'prop-types';
 import { Radio } from 'antd';
 
 const RadioButton = Radio.Button;
@@ -21,6 +22,11 @@ const FilterTodo = ({ onToggle, filter }) => {
             </RadioGroup>
         </div>
     );
+};
+
+FilterTodo.propTypes = {
+    onToggle: PropTypes.func.isRequired,
+    filter: PropTypes.object.isRequired
 };
 
 export default FilterTodo;
