@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, List, Icon, Checkbox, Popconfirm } from 'antd';
 import styles from './TodoList.less';
 
-const TodoList = ({ onChange, onDelete, todolists }) => {
+const TodoList = ({ onToggle, onDelete, todolists }) => {
     return (
         <div>
             <Col span={9}>
@@ -14,7 +14,7 @@ const TodoList = ({ onChange, onDelete, todolists }) => {
                                     <Icon type="close" />
                                 </Popconfirm>
                             ]}>
-                            <Checkbox checked={item.completed} onChange={() => onChange(item.id)}></Checkbox>
+                            <Checkbox checked={item.completed} onChange={() => onToggle(item.id)}></Checkbox>
                             <label className={styles.name + " " + (item.completed ? styles.complete : "")}>{item.name}</label>
                         </List.Item>
                     )}

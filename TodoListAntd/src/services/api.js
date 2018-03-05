@@ -7,6 +7,20 @@ export function addTask(params) {
   });
 }
 
-export function listTasks(params) {
+export function listTasks() {
   return request('/api/listTasks');
+}
+
+export function toggleTask(params) {
+  return request('/api/toggleTask', {
+    method: 'POST',
+    body: params
+  });
+}
+
+export function deleteTask(params) {
+  return request('/api/deleteTask', {
+    method: 'POST',
+    body: params
+  });
 }

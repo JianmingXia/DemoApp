@@ -34,7 +34,10 @@ app.post('/api/addTask', function (req, res) {
         id: id++,
         name: req.body.task_name,
         completed: false
-    }
+    };
+
+    // 排序
+    tasks.push(task);
 
     res.send(JSON.stringify(task));
 });
@@ -42,6 +45,44 @@ app.post('/api/addTask', function (req, res) {
 app.get('/api/listTasks', function (req, res) {
     res.send(JSON.stringify(tasks));
 });
+
+app.post('/api/toggleTask', function (req, res) {
+    console.log(req.body);
+
+    var task_id  = req.body.task_id;
+
+    var result = {};
+    tasks = tasks.map((item) => {
+        if (item.id === task_id) {
+            item.completed = !item.completed;
+
+            result = item;
+            return item;
+        } else {
+            return item;
+        }
+    })
+
+    res.send(JSON.stringify(result));
+});
+
+app.post('/api/deleteTask', function (req, res) {
+    console.log(req.body);
+
+    var task_id = req.body.task_id;
+
+    var delete_task = {};
+    tasks = tasks.filter(item => {
+        if (item.id == task_id) {
+            delete_task = item;
+        }
+
+        return item.id !== task_id;
+    });
+
+    res.send(JSON.stringify(delete_task));
+});
+return 
 
 app.get('/api/test', function (req, res) {
     res.send(JSON.stringify({

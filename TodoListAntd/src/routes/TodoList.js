@@ -4,16 +4,16 @@ import TodoList from '../components/TodoList';
 import AddTodo from '../components/AddTodo';
 
 const TodoListApp = ({ dispatch, todolist }) => {
-    function handleChange(id) {
+    function handleToggle(task) {
         dispatch({
-            type: 'todolist/change',
-            payload: id
+            type: 'todolist/toggleTask',
+            payload: task
         });
     }
 
     function handleDelete(id) {
         dispatch({
-            type: 'todolist/delete',
+            type: 'todolist/deleteTask',
             payload: id
         });
     }
@@ -29,7 +29,7 @@ const TodoListApp = ({ dispatch, todolist }) => {
         <div>
             <h2>TodoList App</h2>
             <AddTodo onAdd={handleAdd} />
-            <TodoList onChange={handleChange} onDelete={handleDelete} todolists={todolist}/>
+            <TodoList onToggle={handleToggle} onDelete={handleDelete} todolists={todolist}/>
         </div>
     );
 };

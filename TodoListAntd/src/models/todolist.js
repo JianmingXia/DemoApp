@@ -1,4 +1,4 @@
-import { addTask, listTasks } from '../services/api';
+import { addTask, listTasks, toggleTask, deleteTask } from '../services/api';
 
 export default {
     namespace: 'todolist',
@@ -13,26 +13,42 @@ export default {
             });
         },
         *listTasks({ payload }, { call, put }) {
-            const response = yield call(listTasks, payload);
+            const response = yield call(listTasks);
 
             yield put({
                 type: 'list',
                 payload: response.data
             });
         },
+        *toggleTask({ payload }, { call, put }) {
+            const response = yield call(toggleTask, { task_id: payload});
+
+            yield put({
+                type: 'toggle',
+                payload: response.data
+            });
+        },
+        *deleteTask({ payload }, { call, put }) {
+            const response = yield call(deleteTask, { task_id: payload });
+
+            yield put({
+                type: 'delete',
+                payload: response.data
+            });
+        },
     },
     reducers: {
-        change(state, { payload: id }) {
+        toggle(state, { payload: task }) {
             return state.map((item) => {
-                if (item.id === id) {
-                    return { ...item, completed: !item.completed };
+                if (item.id === task.id) {
+                    return task;
                 } else {
                     return item;
                 }
             })
         },
-        delete(state, { payload: id }) {
-            return state.filter(item => item.id !== id);
+        delete(state, { payload: task }) {
+            return state.filter(item => item.id !== task.id);
         },
         add(state, { payload }) {
             console.log(payload);
