@@ -1,0 +1,1 @@
+{"project_type":"javascript","debugMode":1,"showFPS":true,"frameRate":60,"noCache":false,"id":"gameCanvas","renderMode":0,"engineDir":"frameworks/cocos2d-html5","modules":["cocos2d","extensions"],"jsList":[],"CocosSrcConfig":{"index_src":"/src/index.js","vendor_src":"/src/vendor.js","resources":["res/common.pkgJson"],"pre_resources":[]}}

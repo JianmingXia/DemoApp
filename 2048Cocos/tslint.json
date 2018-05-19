@@ -1,0 +1,121 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "array-type": [
+            true,
+            "array"
+        ],
+        "ban-types": {
+            "options": [
+                [
+                    "Object",
+                    "Avoid using the `Object` type. Did you mean `object`?"
+                ],
+                [
+                    "Function",
+                    "Avoid using the `Function` type. Prefer a specific function type, like `() => void`, or use `ts.AnyFunction`."
+                ],
+                [
+                    "Boolean",
+                    "Avoid using the `Boolean` type. Did you mean `boolean`?"
+                ],
+                [
+                    "Number",
+                    "Avoid using the `Number` type. Did you mean `number`?"
+                ],
+                [
+                    "String",
+                    "Avoid using the `String` type. Did you mean `string`?"
+                ]
+            ]
+        },
+        "class-name": true,
+        "comment-format": [
+            true,
+            "check-space"
+        ],
+        "curly": [
+            true,
+            "ignore-same-line"
+        ],
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "jsdoc-format": true,
+        "linebreak-style": [
+            true,
+            "CRLF"
+        ],
+        "no-inferrable-types": true,
+        "no-internal-module": true,
+        "no-null-keyword": true,
+        "no-switch-case-fall-through": true,
+        "no-var-keyword": true,
+        "object-literal-shorthand": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-whitespace"
+        ],
+        "quotemark": [
+            true,
+            "double",
+            "avoid-escape"
+        ],
+        "semicolon": [
+            true,
+            "always",
+            "ignore-bound-class-methods"
+        ],
+        "space-within-parens": true,
+        "triple-equals": true,
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            },
+            {
+                "call-signature": "onespace",
+                "index-signature": "onespace",
+                "parameter": "onespace",
+                "property-declaration": "onespace",
+                "variable-declaration": "onespace"
+            }
+        ],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-module",
+            "check-separator",
+            "check-type"
+        ],
+        // below are our config
+        "prefer-const": false,
+        "interface-over-type-literal": false,
+        "no-bitwise": false,
+        "object-literal-sort-keys": false,
+        "variable-name": false,
+        "ordered-imports": false,
+        "no-trailing-whitespace": false,
+        "trailing-comma": [
+            false,
+            {
+                "singleline": "never",
+                "multiline": "always"
+            }
+        ],
+        "no-console": false
+    },
+    "rulesDirectory": []
+}
