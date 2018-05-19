@@ -3,14 +3,9 @@ import GlobalConfig from "../../Common/GlobalConfig";
 import PlayTemplate from "../../UI/Template/PlayTemplate";
 import SushiSprite from "./SushiSprite";
 import UIText from "../../Nireus/UI/UIText";
+import SceneManager from "../../Nireus/Scene/SceneManager";
 
 export default class PlayScene extends NireusScene {
-    public static getInstance(): PlayScene {
-        return this._instance || (this._instance = new PlayScene());
-    }
-
-    private static _instance: PlayScene;
-
     private _sushi_sprites: cc.Sprite[];
     private _play_tpl: PlayTemplate;
     private _score_label: UIText;
@@ -74,7 +69,7 @@ export default class PlayScene extends NireusScene {
 
         this._play_tpl.addChild(sushi_sprite, 5);
 
-        const drop_action = cc.moveTo(4, cc.p(sushi_sprite.x, -30));
+        const drop_action = cc.moveTo(4, cc.p(sushi_sprite.x, -60));
         sushi_sprite.runAction(drop_action);
 
         this._sushi_sprites.push(sushi_sprite);
@@ -93,7 +88,7 @@ export default class PlayScene extends NireusScene {
             let gameover_label = new UIText("Game Over", "Arial", 38);
             gameover_label.x = GlobalConfig.getInstance().frame_width / 2;
             gameover_label.y = GlobalConfig.getInstance().frame_height / 2;
-            
+
             gameover.addChild(gameover_label, 5);
 
             let touch_listener = cc.EventListener.create({
@@ -106,24 +101,21 @@ export default class PlayScene extends NireusScene {
 
             cc.eventManager.addListener(touch_listener, gameover);
 
-            // let TryAgainItem = new cc.MenuItemFont(
-            //     "Try Again",
-            //     function () {
-            //         cc.log("Menu is clicked!");
-            //         let transition = cc.TransitionFade(1, new PlayScene(), cc.color(255, 255, 255, 255));
-            //         cc.director.runScene(transition);
-            //     }, this);
-            // TryAgainItem.attr({
-            //     x: size.width / 2,
-            //     y: size.height / 2 - 60,
-            //     anchorX: 0.5,
-            //     anchorY: 0.5
-            // });
+            let try_again_item = new cc.MenuItemFont(
+                "Try Again",
+                () => {
+                    cc.log("Menu is clicked!");
+                    // let transition = new cc.TransitionFade(1, new PlayScene(), cc.color(255, 255, 255, 255));
+                    SceneManager.getInstance().replaceScene(new PlayScene());
+                }, this);
+            
+            try_again_item.x = GlobalConfig.getInstance().frame_width / 2;
+            try_again_item.y = GlobalConfig.getInstance().frame_height / 2 - 60;
 
-            // let menu = new cc.Menu(TryAgainItem);
-            // menu.x = 0;
-            // menu.y = 0;
-            // gameover.addChild(menu, 1);
+            let menu = new cc.Menu(try_again_item);
+            menu.x = 0;
+            menu.y = 0;
+            gameover.addChild(menu, 1);
 
             this.getParent().addChild(gameover);
 

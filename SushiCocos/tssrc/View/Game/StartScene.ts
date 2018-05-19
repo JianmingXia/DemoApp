@@ -24,7 +24,7 @@ export default class StartScene extends NireusScene {
     }
 
     private _onStart() {
-        SceneManager.getInstance().replaceScene(PlayScene.getInstance());
+        SceneManager.getInstance().replaceScene(new PlayScene());
     }
 
     private _registerEventListener() {
