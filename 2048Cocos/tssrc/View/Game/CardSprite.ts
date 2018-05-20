@@ -22,25 +22,18 @@ export default class CardSprite extends UITemplate {
 
         if (this._number > 0) {
             this._card_label.setString(this._number.toString());
-
-            switch(this._number) {
-                case 2:
-                    this._card_bg.setColor(cc.color(240, 230, 221));
-                    break;
-                case 4:
-                    this._card_bg.setColor(cc.color(241, 222, 201));
-                    break;
-            }
         } else {
             this._card_label.setString("");
-            this._card_bg.setColor(cc.color(200, 190, 180));
         }
+
+        this._updateByNumber();
     }
 
     private _initCard(num: number, position_x: number, position_y: number, width: number, height: number) {
         this._number = num;
 
-        this._card_bg = new cc.LayerColor(new cc.Color(200, 190, 180, 255), width - CARD_BORDER_WIDTH, height - CARD_BORDER_WIDTH);
+        this._card_bg = new cc.LayerColor(cc.color(200, 190, 180), width - CARD_BORDER_WIDTH, 
+            height - CARD_BORDER_WIDTH);
         this._card_bg.x = position_x;
         this._card_bg.y = position_y;
 
@@ -51,5 +44,49 @@ export default class CardSprite extends UITemplate {
         this._card_bg.addChild(this._card_label);
 
         this.addChild(this._card_bg);
+    }
+
+    private _updateByNumber() {
+        switch (this._number) {
+            case 0:
+                this._card_bg.setColor(cc.color(200, 190, 180));
+                break;
+            case 2:
+                this._card_bg.setColor(cc.color(240, 230, 220));
+                break;
+            case 4:
+                this._card_bg.setColor(cc.color(240, 220, 200));
+                break;
+            case 8:
+                this._card_bg.setColor(cc.color(240, 180, 120));
+                break;
+            case 16:
+                this._card_bg.setColor(cc.color(240, 140, 90));
+                break;
+            case 32:
+                this._card_bg.setColor(cc.color(240, 120, 90));
+                break;
+            case 64:
+                this._card_bg.setColor(cc.color(240, 90, 60));
+                break;
+            case 128:
+                this._card_bg.setColor(cc.color(240, 90, 60));
+                break;
+            case 256:
+                this._card_bg.setColor(cc.color(240, 200, 70));
+                break;
+            case 512:
+                this._card_bg.setColor(cc.color(240, 200, 70));
+                break;
+            case 1024:
+                this._card_bg.setColor(cc.color(0, 130, 0));
+                break;
+            case 2048:
+                this._card_bg.setColor(cc.color(0, 130, 0));
+                break;
+            default:
+                this._card_bg.setColor(cc.color(200, 190, 180));
+                break;
+        }
     }
 }

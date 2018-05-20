@@ -6,7 +6,7 @@ const NUMBER_TWO_PERCENT = 80;
 type CardIndex = {
     x: number,
     y: number
-}
+};
 
 const enum Direction {
     UP = 0,
