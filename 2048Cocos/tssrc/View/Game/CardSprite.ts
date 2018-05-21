@@ -70,22 +70,25 @@ export default class CardSprite extends UITemplate {
                 this._card_bg.setColor(cc.color(240, 90, 60));
                 break;
             case 128:
-                this._card_bg.setColor(cc.color(240, 90, 60));
+                this._card_bg.setColor(cc.color(240, 200, 120));
                 break;
             case 256:
-                this._card_bg.setColor(cc.color(240, 200, 70));
+                this._card_bg.setColor(cc.color(240, 200, 100));
                 break;
             case 512:
-                this._card_bg.setColor(cc.color(240, 200, 70));
+                this._card_bg.setColor(cc.color(240, 200, 80));
                 break;
             case 1024:
-                this._card_bg.setColor(cc.color(0, 130, 0));
+                this._card_bg.setColor(cc.color(240, 200, 80));
                 break;
             case 2048:
-                this._card_bg.setColor(cc.color(0, 130, 0));
+                this._card_bg.setColor(cc.color(240, 200, 80));
+                break;
+            case 4096:
+                this._card_bg.setColor(cc.color(240, 60, 60));
                 break;
             default:
-                this._card_bg.setColor(cc.color(200, 190, 180));
+                this._card_bg.setColor(cc.color(260, 30, 30));
                 break;
         }
     }

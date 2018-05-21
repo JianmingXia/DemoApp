@@ -15,14 +15,32 @@ export default class PlayScene extends NireusScene {
 
     private _play_tpl: PlayTemplate;
     private _card_arr: CardSprite[][];
+    private _score = 0;
+    private _score_label: UIText;
+    private _record_score: number;
+    private _record_score_label: UIText;
+
     private _play_border = 40;
     private _touch_began_position: cc.Point;
 
-    private constructor() {
+    private constructor(record_score = 0) {
         super();
 
         this._play_tpl = new PlayTemplate();
         this.addChild(this._play_tpl);
+
+        this._score_label = new UIText(`得分：${this._score}`, "Arial", 30);
+        this._score_label.setAnchorPoint(cc.p(0, 0));
+        this._score_label.x = 30;
+        this._score_label.y = GlobalConfig.getInstance().frame_height - 50;
+        this.addChild(this._score_label);
+
+        this._record_score = record_score;
+        this._record_score_label = new UIText(`历史得分：${this._record_score}`, "Arial", 30);
+        this._record_score_label.setAnchorPoint(cc.p(1, 0));
+        this._record_score_label.x = GlobalConfig.getInstance().frame_width - 30;
+        this._record_score_label.y = GlobalConfig.getInstance().frame_height - 50;
+        this.addChild(this._record_score_label, 5);
 
         this._initCardSprites();
 
@@ -31,6 +49,12 @@ export default class PlayScene extends NireusScene {
         }
 
         this._addEventListener();
+    }
+
+    private _addScore(added_score: number) {
+        this._score += added_score;
+
+        this._score_label.setString(`得分：${this._score}`);
     }
 
     private _addEventListener() {
@@ -68,6 +92,7 @@ export default class PlayScene extends NireusScene {
         let can_filled_card = this._canFilledCard();
 
         let valid_index = Math.floor(Math.random() * can_filled_card.length);
+        cc.log(`valid_index: ${valid_index}/${can_filled_card.length}`);
         let card_index = can_filled_card[valid_index];
 
         let initial_num = this._generateInitialNum();
@@ -111,6 +136,10 @@ export default class PlayScene extends NireusScene {
         if (this._isValidDirec(direction)) {
             this._slideCard(direction);
             this._autoFillCardNumber();
+        }
+
+        if (this._checkGameOver()) {
+            this._gameOver();
         }
     }
 
@@ -254,6 +283,8 @@ export default class PlayScene extends NireusScene {
 
             for (let index = 0; index < tmp_arr.length; index++) {
                 if (index !== tmp_arr.length - 1 && tmp_arr[index] === tmp_arr[index + 1]) {
+                    this._addScore(tmp_arr[index]);
+
                     new_num_arr[i].push(2 * tmp_arr[index]);
                     index++;
                 } else {
@@ -262,7 +293,7 @@ export default class PlayScene extends NireusScene {
             }
 
             if (new_num_arr[i].length < num_arr[i].length) {
-                new_num_arr[i] = new_num_arr[i].concat(new Array(CARD_ROW_NUM - tmp_arr.length).fill(0));
+                new_num_arr[i] = new_num_arr[i].concat(new Array(CARD_ROW_NUM - new_num_arr[i].length).fill(0));
             }
         }
 
@@ -380,5 +411,69 @@ export default class PlayScene extends NireusScene {
         }
 
         return false;
+    }
+
+    private _checkGameOver() {
+        for (let row = 0; row < CARD_ROW_NUM; row++) {
+            for (let col = 0; col < CARD_ROW_NUM; col++) {
+                if (this._card_arr[row][col].number === 0) {
+                    // empty
+                    return false;
+                } else if (row < CARD_ROW_NUM - 1 &&
+                    this._card_arr[row][col].number === this._card_arr[row + 1][col].number) {
+                    // top
+                    return false;
+                } else if (row > 0 &&
+                    this._card_arr[row][col].number === this._card_arr[row - 1][col].number) {
+                    // down
+                    return false;
+                } else if (col > 0 &&
+                    this._card_arr[row][col].number === this._card_arr[row][col - 1].number) {
+                    // left
+                    return false;
+                } else if (col < CARD_ROW_NUM - 1 &&
+                    this._card_arr[row][col].number === this._card_arr[row][col + 1].number) {
+                    // right
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private _gameOver() {
+        let gameover = new cc.LayerColor(cc.color(225, 225, 225, 100));
+
+        let gameover_label = new UIText("Game Over", "Arial", 38);
+        gameover_label.x = GlobalConfig.getInstance().frame_width / 2;
+        gameover_label.y = GlobalConfig.getInstance().frame_height / 2;
+
+        gameover.addChild(gameover_label, 5);
+        this.addChild(gameover);
+
+        let touch_listener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: () => {
+                return true;
+            }
+        });
+
+        cc.eventManager.addListener(touch_listener, gameover);
+
+        let try_again_item = new cc.MenuItemFont(
+            "Try Again",
+            () => {
+                SceneManager.getInstance().replaceScene(new PlayScene(Math.max(this._score, this._record_score)));
+            }, this);
+
+        try_again_item.x = GlobalConfig.getInstance().frame_width / 2;
+        try_again_item.y = GlobalConfig.getInstance().frame_height / 2 - 60;
+
+        let menu = new cc.Menu(try_again_item);
+        menu.x = 0;
+        menu.y = 0;
+        gameover.addChild(menu, 1);
     }
 }
