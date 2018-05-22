@@ -3,7 +3,7 @@ import GlobalConfig from "../../Common/GlobalConfig";
 import PlayTemplate from "../../UI/Template/PlayTemplate";
 import UIText from "../../Nireus/UI/UIText";
 import SceneManager from "../../Nireus/Scene/SceneManager";
-import { CARD_ROW_NUM, INITIAL_CARD_NUMBER, CardIndex, NUMBER_TWO_PERCENT, Direction } from "./Constants";
+import { CARD_ROW_NUM, INITIAL_CARD_NUMBER, CardIndex, NUMBER_TWO_PERCENT, Direction, KeyBoardValue } from "./Constants";
 import CardSprite from "./CardSprite";
 
 export default class PlayScene extends NireusScene {
@@ -58,14 +58,21 @@ export default class PlayScene extends NireusScene {
     }
 
     private _addEventListener() {
-        let listener = cc.EventListener.create({
+        let touch_listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: this._onTouchBegan.bind(this),
             onTouchEnded: this._onTouchEnded.bind(this)
         });
 
-        cc.eventManager.addListener(listener, this._play_tpl);
+        cc.eventManager.addListener(touch_listener, this._play_tpl);
+
+        let keyboard_listener = cc.EventListener.create({
+            event: cc.EventListener.KEYBOARD,
+            onKeyPressed: this._onKeyPressed.bind(this)
+        });
+
+        cc.eventManager.addListener(keyboard_listener, this._play_tpl);
     }
 
     private _initCardSprites() {
@@ -133,6 +140,30 @@ export default class PlayScene extends NireusScene {
     private _onTouchEnded(touch: cc.Touch, event: cc.Event) {
         let direction = this._getTouchDirection(touch.getLocation());
 
+        this._playGameByDirection(direction);
+    }
+
+    private _onKeyPressed(keyCode: number, event: cc.Event) {
+        switch (keyCode) {
+            case KeyBoardValue.W:
+            case KeyBoardValue.VK_UP:
+                return this._playGameByDirection(Direction.UP);
+            case KeyBoardValue.S:
+            case KeyBoardValue.VK_DOWN:
+                return this._playGameByDirection(Direction.DOWN);
+            case KeyBoardValue.A:
+            case KeyBoardValue.VK_LEFT:
+                return this._playGameByDirection(Direction.LEFT);
+            case KeyBoardValue.D:
+            case KeyBoardValue.VK_RIGHT:
+                return this._playGameByDirection(Direction.RIGHT);
+            default:
+                cc.log("Key " + keyCode.toString() + " was pressed!");
+                break;
+        }
+    }
+
+    private _playGameByDirection(direction: Direction) {
         if (this._isValidDirec(direction)) {
             this._slideCard(direction);
             this._autoFillCardNumber();
