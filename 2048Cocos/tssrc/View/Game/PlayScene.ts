@@ -423,14 +423,6 @@ export default class PlayScene extends NireusScene {
                     this._card_arr[row][col].number === this._card_arr[row + 1][col].number) {
                     // top
                     return false;
-                } else if (row > 0 &&
-                    this._card_arr[row][col].number === this._card_arr[row - 1][col].number) {
-                    // down
-                    return false;
-                } else if (col > 0 &&
-                    this._card_arr[row][col].number === this._card_arr[row][col - 1].number) {
-                    // left
-                    return false;
                 } else if (col < CARD_ROW_NUM - 1 &&
                     this._card_arr[row][col].number === this._card_arr[row][col + 1].number) {
                     // right
